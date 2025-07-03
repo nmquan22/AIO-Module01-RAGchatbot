@@ -1,0 +1,16 @@
+
+python-multipart
+blobfile>=2.0.0
+sentencepiece
+langchain-experimental
+fastapi
+uvicorn
+python-dotenv
+transformers
+sentence-transformers
+qdrant-client
+langchain
+langchain-community
+langchain-huggingface
+langchain-experimental
+PyMuPDF
