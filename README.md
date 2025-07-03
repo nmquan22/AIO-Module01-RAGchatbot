@@ -16,13 +16,13 @@
 ---
 
 ###Frontend 
-cd frontend 
-npm install
-npm run dev 
-App sẽ chạy trên localhost:5173
+cd frontend   
+npm install  
+npm run dev   
+App sẽ chạy trên localhost:5173  
 
 ---
 
 ### Backend 
-chạy Qdrant trên docker desktop: docker run -p 6333:6333 qdrant/qdrant
-chạy backend : uvicorn app.main:app --reload
+chạy Qdrant trên docker desktop: docker run -p 6333:6333 qdrant/qdrant  
+chạy backend : uvicorn app.main:app --reload  
