@@ -17,6 +17,9 @@ QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 COLLECTION_NAME = "chatbot"
 
+if not QDRANT_API_KEY:
+    raise ValueError("QDRANT_API_KEY is not set. Check your .env file or environment variables.")
+
 client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
 
 if COLLECTION_NAME not in [c.name for c in client.get_collections().collections]:
