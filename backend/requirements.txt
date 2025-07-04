@@ -14,3 +14,7 @@ langchain-community
 langchain-huggingface
 langchain-experimental
 PyMuPDF
+python-jose[cryptography] 
+passlib[bcrypt] 
+pymongo
+pydantic[email]

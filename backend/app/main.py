@@ -5,6 +5,9 @@ from app.rag_logic import insert_document, retrieve
 from app.llm_logic import generate_answer
 import os, fitz, io
 from starlette.concurrency import run_in_threadpool
+from app.auth.router import router as auth_router
+from fastapi import Depends, HTTPException
+from app.auth.jwt import oauth2_scheme, decode_access_token
 
 load_dotenv()
 ENV = os.getenv("ENV", "dev")
@@ -20,13 +23,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth_router, prefix="/auth")
+
 @app.post("/upload")
-async def upload_doc(user_id: str = Form(...), file: UploadFile = Form(...)):
+async def upload_doc(
+    file: UploadFile = Form(...),
+    token: str = Depends(oauth2_scheme)
+):
+    user_email = decode_access_token(token)
     if file.filename.endswith(".pdf"):
         text = extract_text_from_pdf(await file.read())
     else:
         text = (await file.read()).decode("utf-8")
-    insert_document(user_id, text)
+    insert_document(user_email, text)
     return {"msg": "Uploaded & embedded"}
 
 def extract_text_from_pdf(pdf_bytes: bytes) -> str:
@@ -34,9 +43,17 @@ def extract_text_from_pdf(pdf_bytes: bytes) -> str:
     return "".join(page.get_text() for page in doc)
 
 @app.post("/query")
-async def ask(user_id: str = Form(...), query: str = Form(...)):
-    return {"context": [doc.page_content for doc in retrieve(user_id, query)]}
+async def ask(
+    query: str = Form(...),
+    token: str = Depends(oauth2_scheme)
+):
+    user_email = decode_access_token(token)
+    return {"context": [doc.page_content for doc in retrieve(user_email, query)]}
 
 @app.post("/ask")
-async def ask_answer(user_id: str = Form(...), query: str = Form(...)):
-    return await run_in_threadpool(generate_answer, user_id, query)
+async def ask_answer(
+    query: str = Form(...),
+    token: str = Depends(oauth2_scheme)
+):
+    user_email = decode_access_token(token)
+    return await run_in_threadpool(generate_answer, user_email, query)
