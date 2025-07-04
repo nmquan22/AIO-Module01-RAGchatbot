@@ -24,7 +24,7 @@ Bạn là một trợ lý AI hiểu tiếng Việt, có nhiệm vụ trả lời
 
 # === Format context ===
 def format_docs(docs):
-    context = "\n\n".join(doc.page_content for doc in docs)
+    context = "\n\n".join(doc.page_content for doc in docs)[:4000]
     print("🧾 Formatted Context:\n", context)
     return context
 
