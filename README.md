@@ -139,7 +139,7 @@ llm = LlamaCpp(
 ![query UI](images/query.png)
 ### kết quả 
 ![Result UI](images/answer.png)
-![Retriever UI](images/retrive.png)
+![Retriever UI](images/retrieve.png)
 
 --- 
 
