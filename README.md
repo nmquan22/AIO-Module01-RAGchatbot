@@ -2,9 +2,6 @@
 
 Ứng dụng này sử dụng kiến trúc RAG (Retrieval-Augmented Generation) để trả lời các câu hỏi tiếng Việt dựa trên tài liệu người dùng tải lên. Sử dụng mô hình LLM và hệ thống vector Qdrant cho việc tìm kiếm ngữ nghĩa.
 
-# 🤖 RAG Chatbot – Hỏi Đáp Tiếng Việt Dựa Trên Tài Liệu Người Dùng
-
-Ứng dụng sử dụng kiến trúc RAG để tạo chatbot tiếng Việt có khả năng trả lời câu hỏi dựa trên tài liệu người dùng tải lên.
 
 ---
 
@@ -13,7 +10,7 @@
 - **Frontend**: ReactJS
 - **Backend**: FastAPI
 - **Vector Store**: Qdrant
-- **Embedding model**: `dangvantuan/sbert-cmlm-vietnamese`
+- **Embedding model**: `bkai-foundation-models/vietnamese-bi-encoder`
 - **LLM model**: `AITeamVN/Vi-Qwen2-1.5B-RAG-GGUF`
 - **Chunking**: Semantic chunking (chia theo nghĩa)
 
@@ -101,11 +98,13 @@ Truy cập tại: http://localhost:5173
 ```python
 from llama_cpp import Llama
 
-llm = Llama(
-    model_path="models/vi-qwen2-1.5b-rag-int4.gguf",
+llm = LlamaCpp(
+    model_path=os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "models", "Vi-Qwen2-1.5B-RAG-Q4_K_M.gguf")),
+    temperature=0.2,
+    top_p=0.95,
+    max_tokens=256,
     n_ctx=2048,
-    n_threads=8,
-    n_batch=64
+    verbose=True
 )
 ```
 
@@ -121,6 +120,28 @@ llm = Llama(
 | LangChain       | ✅ Tích hợp sẵn | ❌ Phải tự làm | ⚠️ Có nhưng chưa tối ưu |
 
 ---
+## Demo 
+
+---
+
+### Màn hình đăng kí tài khoản  
+![Register UI](images/login.png)
+### Màn hình chính  
+![Main UI](images/dashboard.png)
+### Docker chạy Qdrant 
+![docker UI](images/docker.png)
+### Dashboard Qdrant  
+![qdrant UI](images/qdrant.png)
+### Upload tài liệu  
+![upload UI](images/upload.png)
+![final upload UI](images/finalup.png)
+### Query 
+![query UI](images/query.png)
+### kết quả 
+![Result UI](images/answer.png)
+![Retriever UI](images/retrive.png)
+
+--- 
 
 ## 📎 Tham khảo
 
