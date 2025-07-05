@@ -42,6 +42,18 @@ uvicorn app.main:app --reload
 | `/query`  | Truy vấn top 5 đoạn gần nhất |
 | `/ask`    | Nhận câu hỏi, trả lời từ LLM kèm đoạn dẫn chứng |
 
+- HuggingFace Vi-Qwen2: [https://huggingface.co/tensorblock/Vi-Qwen2-1.5B-RAG-GGUF](https://huggingface.co/tensorblock/Vi-Qwen2-1.5B-RAG-GGUF) tải mô hình này về để vào folder backend/models 
+- Khi đó llm_pipeline.py mới load đc và chạy 
+```python
+llm = LlamaCpp(
+    model_path=os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "models", "Vi-Qwen2-1.5B-RAG-Q4_K_M.gguf")),
+    temperature=0.2,
+    top_p=0.95,
+    max_tokens=256,
+    n_ctx=2048,
+    verbose=True
+)
+```
 ---
 
 ### 3. Frontend
